@@ -34,19 +34,13 @@ module.exports = {
             const phoneNumber = req.params.phoneNumber;
             const userResult = await userService.findByPhoneNumber(phoneNumber);
             if (userResult.result == null) {
-                res.status(200).send({
-                    statusCode: 200,
-                    res: true,
-                });
+                res.send(response(baseResponse.SUCCESS));
             } else {
-                res.status(200).send({
-                    statusCode: 200,
-                    res: false,
-                });
+                res.send(errResponse(baseResponse.SIGNUP_REDUNDANT_ID));
             }
         } catch (err) {
             console.log(err);
-            res.status(400).send({ statusCode: 400, res: '중복 조회 실패' });
+            res.send(errResponse(baseResponse.SERVER_ERROR));
         }
     },
     signIn: async function (req, res) {
