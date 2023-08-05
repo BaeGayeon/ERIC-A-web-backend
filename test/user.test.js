@@ -41,3 +41,23 @@ describe('userController-signIn', function () {
         findOneStub.restore();
     });
 });
+
+describe('userController-checkPhoneNumber', function () {
+    it('should send a response with SIGNUP_REDUNDANT_ID if the phonenumber already exists', async function () {
+        const req = {
+            params: {
+                phoneNumber: '01012345678',
+            },
+        };
+
+        const res = {
+            send: sinon.stub(),
+        };
+
+        await userController.checkPhoneNumber(req, res);
+
+        expect(
+            res.send.calledWith(errResponse(baseResponse.SIGNUP_REDUNDANT_ID))
+        ).to.be.true;
+    });
+});
