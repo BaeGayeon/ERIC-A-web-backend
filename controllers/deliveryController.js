@@ -9,9 +9,12 @@ module.exports = {
     orderDelivery: async function (req, res) {
         let transaction = await sequelize.transaction();
         try {
-            await deliveryService.createDelivery(req, transaction);
+            let createResult = await deliveryService.createDelivery(
+                req,
+                transaction
+            );
             await transaction.commit();
-            res.send(response(baseResponse.SUCCESS));
+            res.send(createResult);
         } catch (err) {
             await transaction.rollback();
             console.log(err);
@@ -30,7 +33,7 @@ module.exports = {
                 const result = await deliveryService.findDeliveryByPN(
                     phoneNumber
                 );
-                res.send(response(baseResponse.SUCCESS, result));
+                res.send(result);
             } catch (err) {
                 console.log(err);
                 res.send(errResponse(baseResponse.SERVER_ERROR));
