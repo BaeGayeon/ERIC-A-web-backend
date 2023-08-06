@@ -48,4 +48,29 @@ describe('deliveryController-orderDelivery', function () {
 
         createStub.restore();
     });
+
+    it('should send a response with SUCCESS if successes', async function () {
+        const req = {
+            body: {
+                name: '테스트',
+                phoneNumber: '01012345678',
+                departure: '101',
+                destination: '12',
+                item: '마카롱',
+                isInPerson: '1',
+                name: '테스트',
+                status: '접수 중',
+                userId: '01012345678',
+                isAccepted: '접수 요청',
+            },
+        };
+
+        const res = {
+            send: sinon.stub(),
+        };
+
+        await deliveryController.orderDelivery(req, res);
+
+        expect(res.send.calledWith(response(baseResponse.SUCCESS))).to.be.true;
+    });
 });
