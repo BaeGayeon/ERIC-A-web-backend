@@ -137,4 +137,27 @@ describe('deliveryController-getDeliveryList', function () {
             ])
         );
     });
+
+    it('should send a response with BAD_REQUEST if request phoneNumber is not same', async function () {
+        const req = {
+            session: {
+                isAdmin: false,
+                phoneNumber: '01012345678',
+            },
+            params: {
+                phoneNumber: '01012121212',
+            },
+        };
+
+        const res = {
+            send: sinon.stub(),
+        };
+
+        await deliveryController.getDeliveryList(req, res);
+
+        sinon.assert.calledWith(
+            res.send,
+            errResponse(baseResponse.BAD_REQUEST)
+        );
+    });
 });
