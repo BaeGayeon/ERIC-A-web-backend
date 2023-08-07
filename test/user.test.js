@@ -35,8 +35,7 @@ describe('userController-signIn', function () {
 
         await userController.signIn(req, res);
 
-        expect(res.send.calledWith(errResponse(baseResponse.DB_ERROR))).to.be
-            .true;
+        sinon.assert.calledWith(res.send, errResponse(baseResponse.DB_ERROR));
 
         findOneStub.restore();
     });
@@ -56,8 +55,9 @@ describe('userController-checkPhoneNumber', function () {
 
         await userController.checkPhoneNumber(req, res);
 
-        expect(
-            res.send.calledWith(errResponse(baseResponse.SIGNUP_REDUNDANT_ID))
-        ).to.be.true;
+        sinon.assert.calledWith(
+            res.send,
+            errResponse(baseResponse.SIGNUP_REDUNDANT_ID)
+        );
     });
 });

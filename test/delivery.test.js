@@ -43,8 +43,7 @@ describe('deliveryController-orderDelivery', function () {
 
         await deliveryController.orderDelivery(req, res);
 
-        expect(res.send.calledWith(errResponse(baseResponse.DB_ERROR))).to.be
-            .true;
+        sinon.assert.calledWith(res.send, errResponse(baseResponse.DB_ERROR));
 
         createStub.restore();
     });
@@ -70,8 +69,7 @@ describe('deliveryController-orderDelivery', function () {
         };
 
         await deliveryController.orderDelivery(req, res);
-
-        expect(res.send.calledWith(response(baseResponse.SUCCESS))).to.be.true;
+        sinon.assert.calledWith(res.send, response(baseResponse.SUCCESS));
     });
 });
 
@@ -96,8 +94,7 @@ describe('deliveryController-getDeliveryList', function () {
 
         await deliveryController.getDeliveryList(req, res);
 
-        expect(res.send.calledWith(errResponse(baseResponse.DB_ERROR))).to.be
-            .true;
+        sinon.assert.calledWith(res.send, errResponse(baseResponse.DB_ERROR));
 
         findAllStub.restore();
     });
