@@ -74,3 +74,31 @@ describe('deliveryController-orderDelivery', function () {
         expect(res.send.calledWith(response(baseResponse.SUCCESS))).to.be.true;
     });
 });
+
+describe('deliveryController-getDeliveryList', function () {
+    it('should send a response with SERVER_ERROR if accessing the database fails', async function () {
+        const findAllStub = sinon.stub(Delivery.__proto__, 'findAll');
+        findAllStub.throws();
+
+        const req = {
+            session: {
+                isAdmin: false,
+                phoneNumber: '01012121212',
+            },
+            params: {
+                phoneNumber: '01012121212',
+            },
+        };
+
+        const res = {
+            send: sinon.stub(),
+        };
+
+        await deliveryController.getDeliveryList(req, res);
+
+        expect(res.send.calledWith(errResponse(baseResponse.DB_ERROR))).to.be
+            .true;
+
+        findAllStub.restore();
+    });
+});
