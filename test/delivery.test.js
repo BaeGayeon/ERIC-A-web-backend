@@ -101,4 +101,40 @@ describe('deliveryController-getDeliveryList', function () {
 
         findAllStub.restore();
     });
+
+    it('should send a response with SUCCESS if successes', async function () {
+        const req = {
+            session: {
+                isAdmin: false,
+                phoneNumber: '01012121212',
+            },
+            params: {
+                phoneNumber: '01012121212',
+            },
+        };
+
+        const res = {
+            send: sinon.stub(),
+        };
+
+        await deliveryController.getDeliveryList(req, res);
+
+        sinon.assert.calledWith(
+            res.send,
+            response(baseResponse.SUCCESS, [
+                {
+                    id: 8,
+                    name: '테스트',
+                    phoneNumber: '01012121212',
+                    destination: '101',
+                    isInPerson: '두고 가기',
+                    item: '마카롱',
+                    isAccepted: '접수 요청',
+                    status: '접수 중',
+                    date: '2023. 8. 7.',
+                    time: '오후 12:02:07',
+                },
+            ])
+        );
+    });
 });
