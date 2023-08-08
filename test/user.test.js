@@ -35,9 +35,29 @@ describe('userController-signIn', function () {
 
         await userController.signIn(req, res);
 
-        expect(res.send.calledWith(errResponse(baseResponse.DB_ERROR))).to.be
-            .true;
+        sinon.assert.calledWith(res.send, errResponse(baseResponse.DB_ERROR));
 
         findOneStub.restore();
+    });
+});
+
+describe('userController-checkPhoneNumber', function () {
+    it('should send a response with SIGNUP_REDUNDANT_ID if the phonenumber already exists', async function () {
+        const req = {
+            params: {
+                phoneNumber: '01012345678',
+            },
+        };
+
+        const res = {
+            send: sinon.stub(),
+        };
+
+        await userController.checkPhoneNumber(req, res);
+
+        sinon.assert.calledWith(
+            res.send,
+            errResponse(baseResponse.SIGNUP_REDUNDANT_ID)
+        );
     });
 });
