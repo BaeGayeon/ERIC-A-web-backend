@@ -9,14 +9,9 @@ module.exports = {
     orderDelivery: async function (req, res) {
         let transaction = await sequelize.transaction();
         try {
-            let createResult = await deliveryService.createDelivery(
-                req,
-                transaction
-            );
-            await transaction.commit();
+            let createResult = await deliveryService.createDelivery(req);
             res.send(createResult);
         } catch (err) {
-            await transaction.rollback();
             console.log(err);
             res.send(errResponse(baseResponse.SERVER_ERROR));
         }
