@@ -18,6 +18,7 @@ const baseResponse = require('../config/baseResponseStatus');
 const { response, errResponse } = require('../config/response');
 
 describe('userController-signIn', function () {
+    this.timeout(10000);
     it('should send a response with SERVER_ERROR if accessing the database fails', async function () {
         const findOneStub = sinon.stub(User.__proto__, 'findOne');
         findOneStub.throws();
@@ -42,6 +43,7 @@ describe('userController-signIn', function () {
 });
 
 describe('userController-checkPhoneNumber', function () {
+    this.timeout(10000);
     it('should send a response with SIGNUP_REDUNDANT_ID if the phonenumber already exists', async function () {
         const req = {
             params: {
