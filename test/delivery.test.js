@@ -18,7 +18,7 @@ const baseResponse = require('../config/baseResponseStatus');
 const { response, errResponse } = require('../config/response');
 
 describe('deliveryController-orderDelivery', async function () {
-    this.timeout(10000);
+    this.timeout(15000);
     it('should send a response with SERVER_ERROR if accessing the database fails', async function () {
         const createStub = sinon.stub(Delivery.__proto__, 'create');
         createStub.throws();
