@@ -26,11 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Create .env file
-      run: |
-        jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
-      env:
-        SECRETS_CONTEXT: ${{ toJson(secrets) }}
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+      env:
+        TEST_DATABASE: ${{ secrets.TEST_DATABASE }}
+        TEST_HOST: ${{ secrets.TEST_HOST }}
+        TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+        TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        
