@@ -2,7 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const logger = require('./logger');
+const morgan = require('morgan');
 var dotenv = require('dotenv');
 var sequelize = require('sequelize');
 var cors = require('cors');
@@ -62,7 +63,10 @@ db.sequelize.sync();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+app.use(
+    morgan(':method :url :status :response-time ms', { stream: logger.stream })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
