@@ -20,10 +20,10 @@ const production = {
 };
 
 const test = {
-    username: env.MYSQL_USERNAME,
-    password: env.MYSQL_PASSWORD,
-    database: env.MYSQL_DATABASE_TEST,
-    host: env.MYSQL_HOST,
+    username: env.TEST_USERNAME,
+    password: env.TEST_PASSWORD,
+    database: env.TEST_DATABASE,
+    host: env.TEST_HOST,
     dialect: 'mysql',
     port: env.MYSQL_PORT,
 };

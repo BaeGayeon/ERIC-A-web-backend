@@ -3,32 +3,29 @@ const baseResponse = require('../config/baseResponseStatus');
 const { response, errResponse } = require('../config/response');
 
 module.exports = {
-    createDelivery: async function (req, transaction) {
+    createDelivery: async function (req) {
         try {
             let today = new Date();
 
             let dateResult = today.toLocaleDateString();
             let timeResult = today.toLocaleTimeString();
 
-            await delivery.create(
-                {
-                    name: req.body.name,
-                    phoneNumber: req.body.phoneNumber,
-                    departure: req.body.departure,
-                    destination: req.body.destination,
-                    item: req.body.item,
-                    inPerson: req.body.isInPerson,
-                    status: req.body.status,
-                    userId: req.body.userId,
-                    date: dateResult,
-                    time: timeResult,
-                    isAccepted: req.body.isAccepted,
-                },
-                { transaction: transaction }
-            );
+            await delivery.create({
+                name: req.body.name,
+                phoneNumber: req.body.phoneNumber,
+                departure: req.body.departure,
+                destination: req.body.destination,
+                item: req.body.item,
+                inPerson: req.body.isInPerson,
+                status: req.body.status,
+                userId: req.body.userId,
+                date: dateResult,
+                time: timeResult,
+                isAccepted: req.body.isAccepted,
+            });
             return response(baseResponse.SUCCESS);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             return errResponse(baseResponse.DB_ERROR);
         }
     },
@@ -58,7 +55,7 @@ module.exports = {
             }
             return response(baseResponse.SUCCESS, result);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             return errResponse(baseResponse.DB_ERROR);
         }
     },
